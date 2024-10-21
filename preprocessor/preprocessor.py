@@ -1,5 +1,6 @@
 import pandas as pd
 from imblearn.over_sampling import SMOTE
+from sklearn.preprocessing import MinMaxScaler
 
 
 def split_dataset(file_path, train_size=0.9, test_size=0.1, val_size=0):
@@ -95,3 +96,12 @@ def preprocess(file_path, n=None, random_state=None, apply_smote=False):
         data = data.dropna(subset=['Is_laundering'])
 
     return data
+
+
+def get_X_y_scaler(data, scaler=None):
+    X = data.drop(columns=['Is_laundering'])
+    y = data['Is_laundering']  # target
+    if scaler is None:
+        scaler = MinMaxScaler()
+    X_scaled = scaler.fit_transform(X)
+    return X_scaled, y, scaler
