@@ -5,7 +5,7 @@ from imblearn.over_sampling import SMOTE
 def preprocess(file_path, apply_smote=False):
     # Load the data
     df = pd.read_csv(file_path)
-    df = df.sample(random_state=1)  # Sample 'n' rows from the data
+    df = df.sample(n=200000, random_state=1)  # Sample 'n' rows from the data
     df = df.drop_duplicates(keep='first')  # Remove duplicates
 
     # Split features and target
@@ -45,20 +45,20 @@ def preprocess(file_path, apply_smote=False):
 
     # After applying get_dummies, check the columns
     print(X.columns)  # This will help you see what columns were generated
-
-    # Dynamically match high-risk countries from the dummy columns
-    high_risk_countries = {"Nigeria", "Morocco", "Turkey", "Pakistan", "Mexico", "Spain"}
-    sender_columns = [col for col in X.columns if
-                      'Sender_bank_location' in col and any(country in col for country in high_risk_countries)]
-    receiver_columns = [col for col in X.columns if
-                        'Receiver_bank_location' in col and any(country in col for country in high_risk_countries)]
-
-    # If there are any matching columns, apply the high-risk logic
-    if sender_columns or receiver_columns:
-        data['high_risk_countries'] = data[sender_columns + receiver_columns].sum(axis=1).apply(
-            lambda x: 1 if x > 0 else 0)
-    else:
-        data['high_risk_countries'] = 0  # Default to 0 if no high-risk countries are present
+    #
+    # # Dynamically match high-risk countries from the dummy columns
+    # high_risk_countries = {"Nigeria", "Morocco", "Turkey", "Pakistan", "Mexico", "Spain"}
+    # sender_columns = [col for col in X.columns if
+    #                   'Sender_bank_location' in col and any(country in col for country in high_risk_countries)]
+    # receiver_columns = [col for col in X.columns if
+    #                     'Receiver_bank_location' in col and any(country in col for country in high_risk_countries)]
+    #
+    # # If there are any matching columns, apply the high-risk logic
+    # if sender_columns or receiver_columns:
+    #     data['high_risk_countries'] = data[sender_columns + receiver_columns].sum(axis=1).apply(
+    #         lambda x: 1 if x > 0 else 0)
+    # else:
+    #     data['high_risk_countries'] = 0  # Default to 0 if no high-risk countries are present
 
     #
     # # Convert boolean columns to integers
