@@ -2,10 +2,11 @@ import pandas as pd
 from imblearn.over_sampling import SMOTE
 
 
-def preprocess(file_path, n=200000):
+def preprocess(file_path):  # , n=200000):
     # Load the data, and only sample 'n' rows
     df = pd.read_csv(file_path)
-    df = df.sample(n=n, random_state=1)  # Sample 'n' rows from the data
+    df = df.sample(random_state=1)  # Sample 'n' rows from the data
+    # df = df.sample(n=n, random_state=1)  # Sample 'n' rows from the data
     df = df.drop_duplicates(keep='first')  # Remove duplicates
 
     # Split features and target
@@ -36,7 +37,7 @@ def preprocess(file_path, n=200000):
 
     # Apply SMOTE for resampling
     smote = SMOTE(sampling_strategy=0.3, random_state=42)
-    X_resampled, y_resampled = smote.fit_resample(X, y)  # 对y也resample, 这样做对吗?
+    X_resampled, y_resampled = smote.fit_resample(X, y)  # 对y也resample, 这样做对吗? 如果有scaler, X y用不一样的?
 
     # Create a new DataFrame from the resampled data
     data = pd.DataFrame(X_resampled, columns=X.columns)
