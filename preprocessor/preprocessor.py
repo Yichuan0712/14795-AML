@@ -52,14 +52,14 @@ def preprocess(file_path, apply_smote=False):
     data['high_risk_countries'] = data[sender_columns + receiver_columns].sum(axis=1).apply(lambda x: 1 if x > 0 else 0)
 
     # Convert boolean columns to integers
-    # bool_columns = data.select_dtypes(include=['bool', 'object']).columns
-    # for col in bool_columns:
-    #     if data[col].dtype == 'object':
-    #         data[col] = data[col].map({'True': True, 'False': False, 'true': True, 'false': False})
-    #     data[col] = data[col].astype(int)
-    #
-    # # Handle any missing values in the target column
-    # if data['Is_laundering'].isna().sum() > 0:
-    #     data = data.dropna(subset=['Is_laundering'])
+    bool_columns = data.select_dtypes(include=['bool', 'object']).columns
+    for col in bool_columns:
+        if data[col].dtype == 'object':
+            data[col] = data[col].map({'True': True, 'False': False, 'true': True, 'false': False})
+        data[col] = data[col].astype(int)
+
+    # Handle any missing values in the target column
+    if data['Is_laundering'].isna().sum() > 0:
+        data = data.dropna(subset=['Is_laundering'])
 
     return data
