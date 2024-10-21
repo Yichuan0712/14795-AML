@@ -11,3 +11,5 @@ We referenced the approaches from:
 - [Anti-Money-laundering /transactions Project](https://www.kaggle.com/code/yashnarendrajadhav/anti-money-laundering-transactions-project)
 - [Exploratory Data Analysis](https://www.kaggle.com/code/diptaru/exploratory-data-analysis)
 - [AML Prediction](https://www.kaggle.com/code/gbiamgaurav/aml-prediction)
+
+To run the project, download and run `colab/14795_project_runner.ipynb`.
