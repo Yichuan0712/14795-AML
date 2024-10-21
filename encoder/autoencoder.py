@@ -5,6 +5,7 @@ from tensorflow.keras.models import Model
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.optimizers import Adam
 
+
 def funcname(X, y):
     if np.isnan(X).any() or np.isinf(X).any():
         print("Scaled data contains NaN or Infinite values")
