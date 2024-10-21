@@ -41,7 +41,7 @@ def split_dataset(file_path, train_size=0.9, test_size=0.1, val_size=0):
     return train_df, val_df, test_df
 
 
-def preprocess(file_path, n, random_state, apply_smote=False):
+def preprocess(file_path, n=None, random_state=None, apply_smote=False):
     # Load the data
     df = pd.read_csv(file_path)
     df = df.sample(n=n, random_state=random_state)  # Sample 'n' rows from the data
