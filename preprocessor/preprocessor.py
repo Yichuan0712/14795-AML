@@ -2,6 +2,45 @@ import pandas as pd
 from imblearn.over_sampling import SMOTE
 
 
+def split_dataset(file_path, train_size=0.9, test_size=0.1, val_size=0):
+    """
+    Splits the dataset into train, validation, and test sets while keeping the order unchanged.
+
+    Parameters:
+        file_path (str): The path to the dataset file.
+        train_size (float): Proportion of the dataset to include in the training set.
+        test_size (float): Proportion of the dataset to include in the test set.
+        val_size (float, optional): Proportion of the dataset to include in the validation set. Default is 0.
+
+    Returns:
+        train_df (pd.DataFrame): Training dataset.
+        val_df (pd.DataFrame or None): Validation dataset (if `val_size` > 0).
+        test_df (pd.DataFrame): Test dataset.
+    """
+    # Load the full dataset
+    df = pd.read_csv(file_path)
+
+    # Ensure that the sum of train, val, and test sizes is equal to 1.0
+    assert train_size + val_size + test_size == 1.0, "Train, validation, and test sizes must sum to 1.0"
+
+    # Calculate the number of rows for each split
+    train_end = int(train_size * len(df))
+    val_end = int((train_size + val_size) * len(df))
+
+    # Split the data without shuffling
+    train_df = df[:train_end]
+
+    # If validation size is 0, we skip the validation set
+    if val_size > 0:
+        val_df = df[train_end:val_end]
+        test_df = df[val_end:]
+    else:
+        val_df = None
+        test_df = df[train_end:]
+
+    return train_df, val_df, test_df
+
+
 def preprocess(file_path, n, random_state, apply_smote=False):
     # Load the data
     df = pd.read_csv(file_path)
