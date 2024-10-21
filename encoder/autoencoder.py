@@ -38,3 +38,4 @@ def funcname(X, y):
     new_dataset = pd.concat([encoded_features_df, y.reset_index(drop=True)], axis=1)
     autoencoder.save('encoder_decoder_model.h5')
     encoder_model.save('encoder_model.h5')
+
