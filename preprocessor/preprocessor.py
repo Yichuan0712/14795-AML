@@ -46,11 +46,12 @@ def preprocess(file_path, n=None, random_state=None, apply_smote=False):
     # Load the data
     df = pd.read_csv(file_path)
 
-    if n is not None:
+    if n is not None and random_state is not None:
         df = df.sample(n=n, random_state=random_state)
-    else:
-        if random_state is not None:
-            df = df.sample(frac=1, random_state=random_state)
+    elif n is not None and random_state is None:
+        df = df.head(n)
+    elif n is None and random_state is not None:
+        df = df.sample(frac=1, random_state=random_state)
 
     df = df.drop_duplicates(keep='first')  # Remove duplicates
 
