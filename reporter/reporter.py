@@ -30,7 +30,7 @@ def llama_init():
     return tokenizer, model, device
 
 
-def generate_response(tokenizer, model, device, query, alert_message, system_prompt_path='system_prompt.txt', report_template_path='report_tempalte.txt', max_length=400):
+def generate_response(tokenizer, model, device, query, alert_message, system_prompt_path, report_template_path, max_length=400):
     try:
         with open(system_prompt_path, 'r') as file:
             system_prompt = file.read().strip()
@@ -66,7 +66,7 @@ def generate_response(tokenizer, model, device, query, alert_message, system_pro
     return response
 
 
-def run_risk_assessment_chatbot(alert_message):
+def run_risk_assessment_chatbot(alert_message, system_prompt_path, report_template_path):
     """
     A chatbot designed to assist in generating and refining Anti-Money Laundering (AML) risk assessment reports
     based on alert messages. Users can interact to modify the report based on feedback.
@@ -80,7 +80,7 @@ def run_risk_assessment_chatbot(alert_message):
     tokenizer, model, device = llama_init()
 
     # Generate the initial report based on the alert message
-    first_response = generate_response(tokenizer, model, device, 'Generate the first version of the report.', alert_message)
+    first_response = generate_response(tokenizer, model, device, 'Generate the first version of the report.', alert_message, system_prompt_path, report_template_path)
     print('Bot: Here is the initial report:')
     print(first_response)
 
@@ -92,6 +92,6 @@ def run_risk_assessment_chatbot(alert_message):
             break
 
         # Generate response based on user feedback
-        response = generate_response(tokenizer, model, device, query, alert_message)
+        response = generate_response(tokenizer, model, device, query, alert_message, system_prompt_path, report_template_path)
         print(f"Bot: {response}")
 
