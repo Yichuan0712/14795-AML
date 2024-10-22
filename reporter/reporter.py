@@ -30,18 +30,20 @@ def llama_init():
     return tokenizer, model, device
 
 
-def load_prompt_file(file_path):
-    try:
-        with open(file_path, 'r') as file:
-            return file.read().strip()
-    except FileNotFoundError:
-        print(f"Error: The file '{file_path}' was not found.")
-        return ""
-
-
 def generate_response(tokenizer, model, device, query, alert_message, system_prompt_path='reporter/system_prompt.txt', report_template_path='reporter/report_tempalte.txt', max_length=400):
-    system_prompt = load_prompt_file(system_prompt_path)
-    report_template = load_prompt_file(report_template_path)
+    try:
+        with open(system_prompt_path, 'r') as file:
+            system_prompt = file.read().strip()
+    except FileNotFoundError:
+        print(f"Error: '{system_prompt_path}' file not found. Using default system prompt.")
+        system_prompt = "You are a money laundering risk detection assistant."
+
+    try:
+        with open(report_template_path, 'r') as file:
+            report_template = file.read().strip()
+    except FileNotFoundError:
+        print(f"Error: '{report_template_path}' file not found. Using default report template.")
+        report_template = "AML Report Template: Transaction details, Risk indicators, and other findings."
 
     full_prompt = f"{system_prompt}\n\nAlert Message:{alert_message}\n\nReport Template:{report_template}\n\nQuestion: {query}\nAnswer:"
 
