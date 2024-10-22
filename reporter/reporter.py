@@ -66,7 +66,7 @@ def generate_response(tokenizer, model, device, query, alert_message, system_pro
     return response
 
 
-def run_risk_assessment_chatbot(alert_message, system_prompt_path, report_template_path):
+def run_risk_assessment_chatbot(tokenizer, model, device, alert_message, system_prompt_path, report_template_path):
     """
     A chatbot designed to assist in generating and refining Anti-Money Laundering (AML) risk assessment reports
     based on alert messages. Users can interact to modify the report based on feedback.
@@ -75,9 +75,6 @@ def run_risk_assessment_chatbot(alert_message, system_prompt_path, report_templa
     print("We have received an alert message, and the initial report will be generated shortly.")
     print("You can review the report and provide feedback for modifications.")
     print("Type 'exit' at any time to terminate the session.\n")
-
-    # Initialize the model, tokenizer, and device
-    tokenizer, model, device = llama_init()
 
     # Generate the initial report based on the alert message
     first_response = generate_response(tokenizer, model, device, 'Generate the first version of the report.', alert_message, system_prompt_path, report_template_path)
