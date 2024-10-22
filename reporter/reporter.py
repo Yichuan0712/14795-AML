@@ -13,4 +13,5 @@ def get_nth_money_laundering(df, y, n):
 
 
 def clean_data(input_df):
-    return str({k: (True if v == 1 else v) for k, v in dict(input_df).items() if v != 0})
+    alert_message = str({k: (True if v == 1 else v) for k, v in dict(input_df).items() if v != 0})
+    return alert_message
