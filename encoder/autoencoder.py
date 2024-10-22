@@ -8,8 +8,7 @@ from tensorflow.keras.models import load_model
 
 
 def train_autoencoder(X, y, epochs, batch_size, encoder_decoder_path='demo/encoder_decoder_model.h5', encoder_path='demo/encoder_model.h5'):
-    if np.isnan(X).any() or np.isinf(X).any():
-        print("Scaled data contains NaN or Infinite values")
+
     X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2, random_state=42)
     input_dim = X_train.shape[1]
     encoding_dim = 8
@@ -35,9 +34,6 @@ def train_autoencoder(X, y, epochs, batch_size, encoder_decoder_path='demo/encod
 
     encoder_model = Model(inputs=input_layer, outputs=encoded)
     encoded_data = encoder_model.predict(X)
-
-    if np.isnan(encoded_data).any() or np.isinf(encoded_data).any():
-        print("Encoded data contains NaN or Infinite values")
 
     encoded_features_df = pd.DataFrame(encoded_data, columns=[f'Encoded_Feature_{i+1}' for i in range(encoding_dim)])
     new_dataset = pd.concat([encoded_features_df, y.reset_index(drop=True)], axis=1)
