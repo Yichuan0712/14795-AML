@@ -17,7 +17,7 @@ def train_xgb(X_train, y_train, model_path='demo/xgb_model.joblib'):
     return xgb_model
 
 
-def infer_xgb(X_test, model_path='xgb_model.joblib'):
+def infer_xgb(X_test, model_path='demo/xgb_model.joblib'):
     xgb_model = joblib.load(model_path)
 
     y_pred = xgb_model.predict(X_test)
