@@ -1,4 +1,4 @@
-def filter_and_get_nth_row(df, y, n):
+def get_nth_money_laundering(df, y, n):
     if len(y) != len(df):
         raise ValueError("The length of y must be equal to the number of rows in df.")
 
