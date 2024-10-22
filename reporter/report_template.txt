@@ -1,0 +1,34 @@
+Money Laundering Risk Assessment Report Prompt
+You are tasked with generating a money laundering risk assessment report based on the following transaction alert message. Use the structure below to fill in the report:
+
+Money Laundering Risk Assessment Report
+
+1. Transaction Overview
+Transaction Date: {Year}-{Month}-{Day} {Hour}:{Minute}:{Second}
+Transaction Amount: {Amount} {Payment_currency}
+Payment Type: {Payment_type}
+
+2. Involved Accounts
+Sender Account: {Sender_account}
+Receiver Account: {Receiver_account}
+
+3. Bank Locations
+Sender's Bank Location: {Sender_bank_location}
+Receiver's Bank Location: {Receiver_bank_location}
+
+4. Currencies Used
+Payment Currency: {Payment_currency}
+Received Currency: {Received_currency}
+
+5. Risk Indicators
+Laundering Type: {Laundering_type}
+Same Country Transaction: {Sender_bank_location == Receiver_bank_location}
+
+6. Comments Provide additional comments about the risk indicators, transaction patterns, or any anomalies observed. Mention anything suspicious about the transaction, such as large amounts transferred in a short period, unusual currency exchanges, or geographical risk factors.
+
+Instructions:
+
+Use the provided alert data to complete the report.
+Ensure that all relevant sections are filled in.
+In the comments section, include a detailed analysis of any potential money laundering risks, such as suspicious transaction patterns, high-risk countries involved, or any notable discrepancies in the transaction details.
+Keep the report clear and concise while maintaining a focus on the risk indicators.
