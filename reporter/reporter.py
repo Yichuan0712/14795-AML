@@ -30,7 +30,7 @@ def llama_init():
     return tokenizer, model, device
 
 
-def generate_response(tokenizer, model, device, query, alert_message, system_prompt_path='system_prompt.txt', report_template_path='report_tempalte.txt', max_length=400):
+def generate_response(tokenizer, model, device, query, alert_message, system_prompt_path='reporter/system_prompt.txt', report_template_path='reporter/report_tempalte.txt', max_length=400):
     try:
         with open(system_prompt_path, 'r') as file:
             system_prompt = file.read().strip()
