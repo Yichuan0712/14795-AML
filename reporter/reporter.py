@@ -12,5 +12,5 @@ def get_nth_money_laundering(df, y, n):
     return filtered_df.iloc[n]
 
 
-def clean_dict(input_df):
+def clean_data(input_df):
     return {k: (True if v == 1 else v) for k, v in dict(input_df).items() if v != 0}
