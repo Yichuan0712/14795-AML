@@ -39,11 +39,11 @@ def load_prompt_file(file_path):
         return ""
 
 
-def generate_response(tokenizer, model, device, query, system_prompt_path='reporter/system_prompt.txt', report_template_path='reporter/report_tempalte.txt', max_length=400):
+def generate_response(tokenizer, model, device, query, alert_message, system_prompt_path='reporter/system_prompt.txt', report_template_path='reporter/report_tempalte.txt', max_length=400):
     system_prompt = load_prompt_file(system_prompt_path)
     report_template = load_prompt_file(report_template_path)
 
-    full_prompt = f"{system_prompt}\n\n{report_template}\n\nQuestion: {query}\nAnswer:"
+    full_prompt = f"{system_prompt}\n\nAlert Message:{alert_message}\n\nReport Template:{report_template}\n\nQuestion: {query}\nAnswer:"
 
     inputs = tokenizer(full_prompt, return_tensors="pt").to(device)
 
@@ -64,16 +64,32 @@ def generate_response(tokenizer, model, device, query, system_prompt_path='repor
     return response
 
 
-def run_risk_assessment_chatbot():
-    print("Welcome to the Anti-Money Laundering Risk Assessment Bot. Please type your query below.")
-    print("Type 'exit' at any time to quit the session.")
+def run_risk_assessment_chatbot(alert_message):
+    """
+    A chatbot designed to assist in generating and refining Anti-Money Laundering (AML) risk assessment reports
+    based on alert messages. Users can interact to modify the report based on feedback.
+    """
+    print("Welcome to the Anti-Money Laundering Risk Assessment Bot.")
+    print("We have received an alert message, and the initial report will be generated shortly.")
+    print("You can review the report and provide feedback for modifications.")
+    print("Type 'exit' at any time to terminate the session.\n")
 
+    # Initialize the model, tokenizer, and device
     tokenizer, model, device = llama_init()
+
+    # Generate the initial report based on the alert message
+    first_response = generate_response(tokenizer, model, device, 'Generate the first version of the report.', alert_message)
+    print('Bot: Here is the initial report:')
+    print(first_response)
+
+    # Enter interactive session for modifications
     while True:
-        query = input("You: ")
+        query = input("\nYou (provide feedback or ask for modifications): ")
         if query.lower() == 'exit':
-            print("Thank you for using the system. Exiting now.")
+            print("Thank you for using the AML Risk Assessment Bot. Exiting now.")
             break
 
-        response = generate_response(tokenizer, model, device, query)
+        # Generate response based on user feedback
+        response = generate_response(tokenizer, model, device, query, alert_message)
         print(f"Bot: {response}")
+
