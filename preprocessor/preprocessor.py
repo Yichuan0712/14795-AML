@@ -112,3 +112,8 @@ def get_X_y_scaler(data, scaler=None):
         scaler = MinMaxScaler()
     X_scaled = scaler.fit_transform(X)
     return X_scaled, y, scaler
+
+def get_X_y(data):
+    X = data.drop(columns=['Is_laundering'])
+    y = data['Is_laundering']  # target
+    return X, y
