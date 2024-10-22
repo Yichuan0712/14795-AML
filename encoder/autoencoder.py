@@ -51,4 +51,4 @@ def infer_autoencoder(X, encoder_path='demo/encoder_model.h5'):
     encoding_dim = encoded_data.shape[1]
     encoded_features_df = pd.DataFrame(encoded_data, columns=[f'Encoded_Feature_{i + 1}' for i in range(encoding_dim)])
 
-    return encoded_features_df
+    return str(encoded_features_df)
