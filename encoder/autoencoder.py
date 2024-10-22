@@ -48,9 +48,6 @@ def infer_autoencoder(X, encoder_path='demo/encoder_model.h5'):
 
     encoded_data = encoder_model.predict(X)
 
-    if np.isnan(encoded_data).any() or np.isinf(encoded_data).any():
-        print("Encoded data contains NaN or Infinite values")
-
     encoding_dim = encoded_data.shape[1]
     encoded_features_df = pd.DataFrame(encoded_data, columns=[f'Encoded_Feature_{i + 1}' for i in range(encoding_dim)])
 
