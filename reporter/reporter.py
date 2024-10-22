@@ -30,10 +30,20 @@ def llama_init():
     return tokenizer, model, device
 
 
-def generate_response(tokenizer, model, device, query, system_prompt_path='reporter/system_prompt.txt', max_length=200):
-    system_prompt = f""
+def load_prompt_file(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            return file.read().strip()
+    except FileNotFoundError:
+        print(f"Error: The file '{file_path}' was not found.")
+        return ""
 
-    full_prompt = f"{system_prompt}\n\nQuestion: {query}\nAnswer:"
+
+def generate_response(tokenizer, model, device, query, system_prompt_path='reporter/system_prompt.txt', report_template_path='reporter/report_tempalte.txt', max_length=400):
+    system_prompt = load_prompt_file(system_prompt_path)
+    report_template = load_prompt_file(report_template_path)
+
+    full_prompt = f"{system_prompt}\n\n{report_template}\n\nQuestion: {query}\nAnswer:"
 
     inputs = tokenizer(full_prompt, return_tensors="pt").to(device)
 
@@ -54,37 +64,16 @@ def generate_response(tokenizer, model, device, query, system_prompt_path='repor
     return response
 
 
-def chatbot():
-    identity = "the CMU ISO (Carnegie Mellon University Information Security Office) virtual assistant"
-    knowledge = """
-    1. What should I do if I think my Andrew account has been compromised?
-       - You should immediately change your password by going to the Andrew Account page. Contact the CMU Help Center if you need further assistance.
+def run_risk_assessment_chatbot():
+    print("Welcome to the Anti-Money Laundering Risk Assessment Bot. Please type your query below.")
+    print("Type 'exit' at any time to quit the session.")
 
-    2. How can I access CMU's VPN?
-       - You can download the Cisco AnyConnect VPN from the CMU software catalog and log in using your Andrew ID and password. VPN access ensures your connection is secure while accessing university resources remotely.
-
-    3. How can I recognize phishing emails?
-       - Look for suspicious signs such as generic greetings, urgent language, requests for personal information, or links to unrecognized websites. Always report phishing emails to CMU's Information Security Office (iso@cmu.edu).
-
-    4. What should I do if I accidentally clicked on a phishing link?
-       - If you clicked on a phishing link, disconnect your device from the internet and contact CMU's Information Security Office (iso@cmu.edu) immediately. Run a virus scan and change any compromised passwords.
-
-    5. How do I securely store sensitive information?
-       - Use university-approved encrypted storage solutions such as Box or Google Drive with your Andrew account. Avoid sharing sensitive information through email.
-
-    6. What is Multi-Factor Authentication (MFA) and how do I set it up?
-       - MFA adds an extra layer of security by requiring a second verification step. You can set up MFA by going to CMU's Duo portal (www.cmuduo.com) and registering your device for MFA.
-    """
-
-    print(f"Welcome to {identity} Chatbot! Type 'exit' to quit.")
     tokenizer, model, device = llama_init()
     while True:
         query = input("You: ")
         if query.lower() == 'exit':
-            print("Goodbye!")
+            print("Thank you for using the system. Exiting now.")
             break
 
-        response = generate_response(tokenizer, model, device, query, knowledge)
+        response = generate_response(tokenizer, model, device, query)
         print(f"Bot: {response}")
-
-chatbot()
