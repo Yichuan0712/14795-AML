@@ -12,4 +12,4 @@ We referenced the approaches from:
 - [Exploratory Data Analysis](https://www.kaggle.com/code/diptaru/exploratory-data-analysis)
 - [AML Prediction](https://www.kaggle.com/code/gbiamgaurav/aml-prediction)
 
-To run the project using checkpoints, download and run `14795-AML/colab/14795_project_runner_testXGB_report.ipynb`.
+To run the project using checkpoints, download and run `colab/14795_project_runner_testXGB_report.ipynb`.
