@@ -7,7 +7,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.models import load_model
 
 
-def train_autoencoder(X, y, epochs, batch_size):
+def train_autoencoder(X, y, epochs, batch_size, encoder_decoder_path='demo/encoder_decoder_model.h5', encoder_path='demo/encoder_model.h5'):
     if np.isnan(X).any() or np.isinf(X).any():
         print("Scaled data contains NaN or Infinite values")
     X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -41,14 +41,14 @@ def train_autoencoder(X, y, epochs, batch_size):
 
     encoded_features_df = pd.DataFrame(encoded_data, columns=[f'Encoded_Feature_{i+1}' for i in range(encoding_dim)])
     new_dataset = pd.concat([encoded_features_df, y.reset_index(drop=True)], axis=1)
-    autoencoder.save('demo/encoder_decoder_model.h5')
-    encoder_model.save('demo/encoder_model.h5')
+    autoencoder.save(encoder_decoder_path)
+    encoder_model.save(encoder_path)
 
     return new_dataset, autoencoder, encoder_model
 
 
-def infer_autoencoder(X):
-    encoder_model = load_model('demo/encoder_model.h5')
+def infer_autoencoder(X, encoder_path='demo/encoder_model.h5'):
+    encoder_model = load_model(encoder_path)
 
     encoded_data = encoder_model.predict(X)
 
