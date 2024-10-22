@@ -114,6 +114,6 @@ def get_X_y_scaler(data, scaler=None):
     return X_scaled, y, scaler
 
 def get_X_y(data):
-    X = data.drop(columns=['Is_laundering']).to_numpy()
-    y = data['Is_laundering'].to_numpy()
+    X = data.drop(columns=['Is_laundering']).values
+    y = data['Is_laundering'].values
     return X, y
