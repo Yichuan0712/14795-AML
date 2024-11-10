@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-def train_xgb(X_train, y_train, model_path='demo/xgb_model.joblib'):
+def train_xgb(X_train, y_train, model_path='demo/xgb_model.joblib', random_state=None):
 
-    xgb_model = xgb.XGBClassifier()  # TODO: 增加随机性
+    xgb_model = xgb.XGBClassifier(random_state=random_state)
 
     xgb_model.fit(X_train, y_train)
 
