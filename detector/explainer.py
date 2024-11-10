@@ -13,5 +13,4 @@ plt.show()
 from sklearn.inspection import plot_partial_dependence
 plot_partial_dependence(xgb_model, X_train, [0, (0, 1)], grid_resolution=50)
 plt.show()
-
 """
