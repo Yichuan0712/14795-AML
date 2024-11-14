@@ -11,5 +11,6 @@ We referenced the approaches from:
 - [Anti-Money-laundering /transactions Project](https://www.kaggle.com/code/yashnarendrajadhav/anti-money-laundering-transactions-project)
 - [Exploratory Data Analysis](https://www.kaggle.com/code/diptaru/exploratory-data-analysis)
 - [AML Prediction](https://www.kaggle.com/code/gbiamgaurav/aml-prediction)
+- [SAML-D Exploratory Data Analysis & Classification](https://www.kaggle.com/code/berkanoztas/saml-d-exploratory-data-analysis-classification)
 
 To run the project using checkpoints, download and run `colab/14795_project_runner_testXGB_report.ipynb`.
